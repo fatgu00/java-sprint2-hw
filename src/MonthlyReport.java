@@ -7,21 +7,18 @@ import java.util.*;
 public class MonthlyReport {
 
 
-    private String readFileContentsOrNull(String path) {
+    public String readFileContentsOrNull(String path) {
         try {
             path="G:\\Git\\dev\\java-sprint2-hw-main\\resources\\" + path;
-
             return Files.readString(Path.of(path));
         } catch (IOException e) {
             System.out.println("Невозможно прочитать файл с месячным отчётом. Возможно, файл не находится в нужной директории.");
             return null;
         }
-
     }
 
 
     HashMap<Integer, ArrayList<MonthData>> month;
-
 
     void record() {
         month = new HashMap<>();
@@ -44,7 +41,6 @@ public class MonthlyReport {
 
     }
 
-
     void maxProfit(Integer strings){
 
         int maxFalse = 0;
@@ -52,11 +48,11 @@ public class MonthlyReport {
             String name = "";
             for (MonthData sum : value) {
                 int sumFalse = 0 ;
-                if (sum.is_expense == false) {
+                if (sum.isExpense == false) {
                     sumFalse = sum.sum_of_one * sum.quantity;
                     if (maxFalse < sumFalse) {
                         maxFalse = sumFalse ;
-                        name = sum.item_name;
+                        name = sum.itemName;
                     }
 
                 }
@@ -74,11 +70,11 @@ public class MonthlyReport {
             String name = "";
             for (MonthData sum : value) {
                 int sumTrue =0;
-                if (sum.is_expense == true) {
+                if (sum.isExpense == true) {
                     sumTrue = sum.sum_of_one * sum.quantity;
                     if (maxTrue < sumTrue) {
                         maxTrue = sumTrue;
-                        name = sum.item_name;
+                        name = sum.itemName;
                     }
                 }
         }
@@ -92,7 +88,7 @@ public class MonthlyReport {
             int sum = 0;
             for (MonthData val: value){
                 int multiply = 0;
-                if (val.is_expense==false){
+                if (val.isExpense==false){
                     multiply=val.sum_of_one*val.quantity;
                     sum+=multiply;
                 }
@@ -100,12 +96,13 @@ public class MonthlyReport {
             }
         return sum;
     }
+
     int totalExpens(Integer strings){
             ArrayList<MonthData> value = month.get(strings);
             int sum = 0;
             for (MonthData val: value){
                 int multiply = 0;
-                if (val.is_expense==true){
+                if (val.isExpense==true){
                     multiply=val.sum_of_one*val.quantity;
                     sum+=multiply;
                 }
@@ -114,25 +111,19 @@ public class MonthlyReport {
         return sum;
     }
 
-
-
-
     public class MonthData {
 
-
-        public String item_name;
-        public boolean is_expense;
+        public String itemName;
+        public boolean isExpense;
         public int quantity;
         public int sum_of_one;
 
-
-
-        public MonthData(String item_name,
-                         boolean is_expense,
+        public MonthData(String itemName,
+                         boolean isExpense,
                          int quantity,
                          int sum_of_one) {
-            this.item_name = item_name;
-            this.is_expense = is_expense;
+            this.itemName = itemName;
+            this.isExpense = isExpense;
             this.quantity = quantity;
             this.sum_of_one = sum_of_one;
 
