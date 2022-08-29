@@ -4,12 +4,12 @@ import java.util.HashMap;
 public class YearlyReport {
 
     HashMap<Integer,ArrayList<DataForYear>> year ;
-
-    void record(MonthlyReport monthlyReport){
+        String path = null;
+    void record(ReadFileContents readFileContents){
         year = new HashMap<>();
-        String path = "y.2021.csv";
+        path = "y.2021.csv";
         ArrayList<DataForYear> dataForYears = new ArrayList<>();
-        String fileContents = monthlyReport.readFileContentsOrNull(path);
+        String fileContents = readFileContents.readFileContentsOrNull(path);
         String[] lines = fileContents.split("\n");
         for (int g = 1; g<lines.length;g++) {
             String line = lines[g];
@@ -51,9 +51,10 @@ public class YearlyReport {
         }
         return avg;
     }
-    ArrayList<DataForYear> truee= new ArrayList<>();
-    ArrayList<DataForYear> falese = new ArrayList<>();
+
     void profitOfMonth(){
+        ArrayList<DataForYear> positiveYears = new ArrayList<>();
+        ArrayList<DataForYear> negativeYears = new ArrayList<>();
 
         for (Integer years:year.keySet()){
 
@@ -61,15 +62,15 @@ public class YearlyReport {
 
             for (DataForYear vfl:value) {
                 if (vfl.isExpense == false ) {
-                    falese.add(vfl);
+                    negativeYears.add(vfl);
                 }
                 else {
-                    truee.add(vfl);
+                    positiveYears .add(vfl);
                 }
             }
             int profit = 0;
-            for (DataForYear fales:falese){
-                for (DataForYear tree:truee){
+            for (DataForYear fales:negativeYears){
+                for (DataForYear tree:positiveYears ){
                     if (fales.month == tree.month){
                         profit=fales.amount-tree.amount;
                         if (tree.month == 1){

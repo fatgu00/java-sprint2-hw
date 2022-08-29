@@ -7,28 +7,17 @@ import java.util.*;
 public class MonthlyReport {
 
 
-    public String readFileContentsOrNull(String path) {
-        try {
-            path="G:\\Git\\dev\\java-sprint2-hw-main\\resources\\" + path;
-            return Files.readString(Path.of(path));
-        } catch (IOException e) {
-            System.out.println("Невозможно прочитать файл с месячным отчётом. Возможно, файл не находится в нужной директории.");
-            return null;
-        }
-    }
-
-
     HashMap<Integer, ArrayList<MonthData>> month;
-
-    void record() {
+    String path=null;
+    void record(ReadFileContents readFileContents) {
         month = new HashMap<>();
 
         for (int i = 1; i < 4; i++) {
 
-             String path = "m.20210" + i + ".csv";
+                path = "m.20210" + i + ".csv";
 
              ArrayList<MonthData> monthData = new ArrayList<>();
-             String fileContents = readFileContentsOrNull(path);
+             String fileContents = readFileContents.readFileContentsOrNull(path);
              String[] lines = fileContents.split("\n");
              for (int g = 1; g<lines.length;g++) {
                  String line = lines[g];
@@ -49,7 +38,7 @@ public class MonthlyReport {
             for (MonthData sum : value) {
                 int sumFalse = 0 ;
                 if (sum.isExpense == false) {
-                    sumFalse = sum.sum_of_one * sum.quantity;
+                    sumFalse = sum.sumOfOne * sum.quantity;
                     if (maxFalse < sumFalse) {
                         maxFalse = sumFalse ;
                         name = sum.itemName;
@@ -71,7 +60,7 @@ public class MonthlyReport {
             for (MonthData sum : value) {
                 int sumTrue =0;
                 if (sum.isExpense == true) {
-                    sumTrue = sum.sum_of_one * sum.quantity;
+                    sumTrue = sum.sumOfOne * sum.quantity;
                     if (maxTrue < sumTrue) {
                         maxTrue = sumTrue;
                         name = sum.itemName;
@@ -89,7 +78,7 @@ public class MonthlyReport {
             for (MonthData val: value){
                 int multiply = 0;
                 if (val.isExpense==false){
-                    multiply=val.sum_of_one*val.quantity;
+                    multiply=val.sumOfOne*val.quantity;
                     sum+=multiply;
                 }
 
@@ -103,7 +92,7 @@ public class MonthlyReport {
             for (MonthData val: value){
                 int multiply = 0;
                 if (val.isExpense==true){
-                    multiply=val.sum_of_one*val.quantity;
+                    multiply=val.sumOfOne*val.quantity;
                     sum+=multiply;
                 }
 
@@ -116,16 +105,16 @@ public class MonthlyReport {
         public String itemName;
         public boolean isExpense;
         public int quantity;
-        public int sum_of_one;
+        public int sumOfOne;
 
         public MonthData(String itemName,
                          boolean isExpense,
                          int quantity,
-                         int sum_of_one) {
+                         int sumOfOne) {
             this.itemName = itemName;
             this.isExpense = isExpense;
             this.quantity = quantity;
-            this.sum_of_one = sum_of_one;
+            this.sumOfOne = sumOfOne;
 
         }
 

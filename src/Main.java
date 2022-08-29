@@ -11,23 +11,31 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         MonthlyReport monthlyReport = new MonthlyReport();
         YearlyReport yearlyReport = new YearlyReport();
+        ReadFileContents readFileContents = new ReadFileContents();
 
         printMenu();
         int userInput = scanner.nextInt();
 
         while (userInput != 0) {
             if (userInput == 1) {
-                monthlyReport.record();
+                monthlyReport.record(readFileContents);
             } else if (userInput == 2) {
-                yearlyReport.record(monthlyReport);
+                yearlyReport.record(readFileContents);
             } else if (userInput == 3) {
-                reportVerification(monthlyReport, yearlyReport);
+                if (readFileContents.readFileForMonthlyReport(monthlyReport)==0 && readFileContents.readFileForYearlyReport(yearlyReport)==0){
+                    reportVerification(monthlyReport, yearlyReport);
+                }
             }
             else if (userInput == 4) {
-                infoAboutMonthReport(monthlyReport);
+                if (readFileContents.readFileForMonthlyReport(monthlyReport)==0)
+                {
+                    infoAboutMonthReport(monthlyReport);
+                }
             }
             else if (userInput == 5) {
-                infoAboutYearsReports(yearlyReport);
+                if (readFileContents.readFileForYearlyReport(yearlyReport)==0){
+                    infoAboutYearsReports(yearlyReport);
+                }
             }
             else {
                 System.out.println("Такай команды нет. ");
